@@ -21,7 +21,7 @@ class TestHarness( Component ):
     # Instantiate models
 
     s.src  = StreamSourceFL( Bits64, msgs=imsgs, initial_delay=0, interval_delay=0 )
-    s.sink = StreamSinkFL  ( Bits32, msgs=omsgs, initial_delay=0, interval_delay=0 )
+    s.sink = StreamSinkFL  ( Bits32, msgs=omsgs, initial_delay=10, interval_delay=0 )
     s.imul = IntMulScycleV3()
 
     # Connect

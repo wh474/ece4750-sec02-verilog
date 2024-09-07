@@ -6,6 +6,7 @@
 `define IMUL_INT_MUL_SCYCLE_V2_V
 
 `include "vc/trace.v"
+`include "vc/regs.v"
 
 module imul_IntMulScycleV2
 (
@@ -21,6 +22,49 @@ module imul_IntMulScycleV2
 );
 
   // ... implement your multiplier with valid bit below ...
+
+  // Top Down, so always call it before
+  logic [31:0] in0_reg;
+
+  // `include "vc/regs.v"
+  vc_ResetReg#(32,0) in0_reg_
+  (
+    .clk   (clk),
+    .reset (reset),
+    .d     (in0),
+    .q     (in0_reg)
+  );
+
+  logic [31:0] in1_reg;
+
+  vc_ResetReg#(32,0) in1_reg_
+  (
+    .clk   (clk),
+    .reset (reset),
+    .d     (in1),
+    .q     (in1_reg)
+  );
+
+  logic [1:0] in_val_reg;
+
+  vc_ResetReg#(2,0) in_val_reg_
+  (
+    .clk   (clk),
+    .reset (reset),
+    .d     (in_val),
+    .q     (in_val_reg)
+  );
+
+  // MULTIPLICATION LOGIC 
+
+  // always @(*) begin
+  //   out = in0_reg * in1_reg;
+  // end
+
+  // OR below also works
+
+  assign out = in0_reg * in1_reg;
+  assign out_val = in_val_reg; 
 
   //----------------------------------------------------------------------
   // Line Tracing
